@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700' rel='stylesheet' type='text/css'>
+		<link href="styles/workbench.css" rel="stylesheet" type="text/css">
+		<title>Dminor Workbench</title>
+		<!-- JavaScript files for Dminor raytracer. -->
+		<script src="scripts/core/Vector3.js"></script>
+		<script src="scripts/core/Matrix3x3.js"></script>
+		<script src="scripts/core/Ray.js"></script>
+		<script src="scripts/core/Camera.js"></script>
+		<script src="scripts/core/Material.js"></script>
+		<script src="scripts/core/Surface.js"></script>
+		<script src="scripts/core/Light.js"></script>
+		<script src="scripts/core/Intersection.js"></script>
+		<script src="scripts/core/Sphere.js"></script>
+		<script src="scripts/core/Plane.js"></script>
+		<script src="scripts/core/Triangle.js"></script>
+		<script src="scripts/core/AmbientLight.js"></script>
+		<script src="scripts/core/PointLight.js"></script>
+		<script src="scripts/core/AreaLight.js"></script>
+		<script src="scripts/core/Renderer.js"></script>
+		<!-- JavaScript and CSS files for CodeMirror. -->
+		<script src="scripts/codemirror-3.02/lib/codemirror.js"></script>
+		<link rel="stylesheet" href="scripts/codemirror-3.02/lib/codemirror.css">
+		<script src="scripts/codemirror-3.02/mode/javascript/javascript.js"></script>
+		<!-- Scripts for initializing the workbench. -->
+		<script src="scripts/workbench/demos.js"></script>
+		<script src="scripts/workbench/wbsetup.js"></script>
+	</head>
+	<body>
+
+		<div class="WbContainer">
+			
+			<h2>Dminor Workbench</h2>
+			
+			<div class="PoweredBy">
+				Code editor powered by
+				<a class="PoweredBy" href="http://codemirror.net/" target="_blank">
+					CodeMirror
+				</a>  
+			</div>
+			
+			<div class="Options">
+				
+				<div class="OptSection">
+						
+					<div class="SecTitle">Demos</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Demo scene &amp; settings:
+						</span>
+						<span class="OptItem">
+							<select id="sltDemos">
+								<option value="none">None</option>
+								<option value="spheres">Simple spheres</option>
+								<option value="triangles">Triangles</option>
+								<option value="reflection" selected="selected">Basic reflections</option>
+								<option value="refraction">Basic refractions</option>
+								<option value="sshadow">Soft shadows</option>
+							</select>
+						</span>
+						<span id="spDemoDesc" class="OptItem"></span>
+					</div>
+					
+				</div>
+				<!-- End of div.OptSection -->
+				
+				<div class="OptSection">
+					
+					<div class="SecTitle">Renderer</div>
+					
+					<div class="Option">
+						<span class="OptTitle">Image size (width by height):</span>
+						<span class="OptItem">
+							<input id="txtVw" type="text" size="4" value="320">
+							px by
+							<input id="txtVh" type="text" size="4" value="240">
+							px
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Anti-aliasing:
+							<span class="OptItem">
+								x<input id="txtNSubs" type="text" size="2" value="1">
+							</span>
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Area light sampling:
+							<span class="OptItem">
+								x<input id="txtNLSubs" type="text" size="2" value="2">
+							</span>
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Max # of reflections:
+							<span class="OptItem">
+								<input id="txtNRefl" type="text" size="2" value="2">
+							</span>
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Max # of refractions:
+							<span class="OptItem">
+								<input id="txtNRefr" type="text" size="2" value="2">
+							</span>
+						</span>
+					</div>
+					
+				</div>
+				<!-- End of div.OptSection -->
+				
+				<div class="OptSection">
+						
+					<div class="SecTitle">Export</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							<input id="cbCanvas" type="checkbox" checked="checked" disabled="disabled"/>
+							Render to canvas?
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							<a id="aView" class="Button">View in separate page</a>
+							<a id="aSave" class="Button">Save as..</a>
+						</span>
+					</div>
+					
+				</div>
+				<!-- End of div.OptSection -->
+				
+				<div class="OptSection">
+						
+					<div class="SecTitle">Scene</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Format:
+						</span>
+						<span class="OptItem">
+							<select id="sltFormat">
+								<option>Native scene graph in JavaScript</option>
+								<option>JSON (JavaScript Object Notation)</option>
+								<option>WaveFront .OBJ file format</option>
+								<option>.ASC file format</option>
+							</select>
+						</span>
+					</div>
+					
+					<div class="Option">
+						<span class="OptTitle">
+							Source:
+						</span>
+						<span class="OptTitle">
+							<a id="aUpload" class="Button">Upload..</a>
+						</span>
+						<span class="OptTitle">
+							or directly edit below
+						</span>
+					</div>
+					
+				</div>
+				<!-- End of div.OptSection -->
+				
+				<div class="OptSection SecScene">
+						
+					<div class="SecTitle">
+						Scene Description
+					</div>
+					
+					<textarea id="taScene" class="SceneDesc"></textarea>
+					
+				</div>
+				<!-- End of div.OptSection -->
+				
+			</div>
+			<!-- End of div.Options -->
+			
+			<div class="Render">
+				
+				<a id="aRender" class="Button Render">Render</a>
+				<span id="spProg" class="RenderProg">
+					Ready to render.
+				</span>
+
+				<canvas id="cnvRender" class="RenderTgt" width="320" height="480"></canvas>
+
+			</div>
+			<!-- End of div.Render -->
+			
+		</div>
+		<!-- End of div.WbContainer -->
+		
+	</body>
+</html>
