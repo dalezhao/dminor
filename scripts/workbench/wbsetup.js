@@ -127,7 +127,19 @@ window.onload = function() {
 		var nrefr = parseInt(txtNRefr.value);
 		var vw = parseInt(txtVw.value);
 		var vh = parseInt(txtVh.value);
-		var scene = eval("(" + cmScene.getValue() + ")");
+		
+		var scene = "";
+		
+		try {
+			
+			scene = eval("(" + cmScene.getValue() + ")");
+			
+		} catch(e) {
+			
+			spProg.innerText =
+				"An error occurred during rendering: " + e.message;
+				return;
+		}
 		
 		// Set up all the parameters of the renderer.
 		

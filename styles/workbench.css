@@ -141,6 +141,7 @@ a.Render {
 	display: block;
 	float: left;
 	width: 120px;
+	margin-right: 10px;
 	text-align: center;
 	font-size: 12px;
 	background-color: orange;
@@ -159,7 +160,7 @@ span.RenderProg {
 	display: block;
 	float: left;
 	line-height: 18px;
-	padding: 6px 10px;
+	padding: 6px 0px;
 	font-size: 12px;
 }
 
