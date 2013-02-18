@@ -189,15 +189,15 @@ var demoReflection = "{\n\
 		),\n\
 		new Triangle(\n\
 			\n\
-			new Vector3(-1.0, -0.5, 0.0),\n\
-			new Vector3(-0.8, 1.5, 2.0),\n\
-			new Vector3(-1.5, -0.5, 2.0),\n\
+			new Vector3(-2.4, -0.2, -3.0),\n\
+			new Vector3(-1.8, 2.5, 0.0),\n\
+			new Vector3(-2.4, -0.2, 1.0),\n\
 			new Material(\n\
 				new Vector3(0.2, 0.2, 0.2),\n\
-				new Vector3(0.3, 0.3, 0.3),\n\
+				new Vector3(0.5, 0.5, 0.5),\n\
 				new Vector3(1.0, 1.0, 1.0),\n\
 				100,\n\
-				new Vector3(0.2, 0.2, 0.2)\n\
+				new Vector3(0.5, 0.5, 0.5)\n\
 			)\n\
 		)\n\
 	],\n\
@@ -302,6 +302,124 @@ var demoSShadows = "{\n\
 	]\n\
 }";
 
+var demoPerlinWood = "{\n\
+	camera:\n\
+		new Camera(\n\
+			new Vector3(0.5, 1, 4.0),\n\
+			new Vector3(0.0, -0.25, -1.0),\n\
+			new Vector3(0.0, 1.0, 0.0),\n\
+			2.0, 4.0, 3.0\n\
+		),\n\
+	\n\
+	surfaces: [\n\
+		new Sphere(\n\
+			new Vector3(-0.4, 0.0, 0.0),\n\
+			1.2,\n\
+			new Material(\n\
+				function(surface, pos) {return this.getDiffuse(surface, pos).mult(0.2); },\n\
+				(function() {\n\
+					var perlinGen = noise.getPerlinGen(6);\n\
+					return function(surface, pos) {\n\
+						var x = (pos.s0 - surface.center.s0) / (2 * surface.radius) + 0.5;\n\
+						var y = (pos.s1 - surface.center.s1) / (2 * surface.radius) + 0.5;\n\
+						var z = (pos.s2 - surface.center.s2) / (2 * surface.radius) + 0.5;\n\
+						var n = perlinGen(x, y, z);\n\
+						var c = Math.abs(Math.sin((pos.s0 + n * 2) / 0.1)) * 1.2 + 1.5;\n\
+						return new Vector3(c * 0.8, c * 0.6, c * 0.4).mult(0.8);\n\
+					};\n\
+				})(),\n\
+				function(surface, pos) {return this.getDiffuse(surface, pos).mult(0.1); },\n\
+				10,\n\
+				new Vector3(0.0, 0.0, 0.0),\n\
+				1.05,\n\
+				new Vector3()\n\
+			)\n\
+		),\n\
+		new Sphere(\n\
+			new Vector3(1.5, -0.2, 0.5),\n\
+			0.8,\n\
+			new Material(\n\
+				new Vector3(0.7, 0.0, 0.0),\n\
+				new Vector3(0.7, 0.0, 0.0),\n\
+				new Vector3(0.7, 0.0, 0.0),\n\
+				100,\n\
+				new Vector3(0.8, 0.8, 0.8),\n\
+				1.0,\n\
+				new Vector3()\n\
+			)\n\
+		),\n\
+		new Plane(\n\
+			new Vector3(0.0, 1.0, 0.0),\n\
+			1.0,\n\
+			new Material(\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				100,\n\
+				new Vector3(0.5, 0.5, 0.5)\n\
+			)\n\
+		),\n\
+		new Plane(\n\
+			new Vector3(0.5, 0.0, 1.0),\n\
+			5.0,\n\
+			new Material(\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				100,\n\
+				new Vector3(0.5, 0.5, 0.5)\n\
+			)\n\
+		),\n\
+		new Plane(\n\
+			new Vector3(-1.0, 0.0, 0.5),\n\
+			5.0,\n\
+			new Material(\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				new Vector3(1.0, 1.0, 1.0),\n\
+				100,\n\
+				new Vector3(0.5, 0.5, 0.5)\n\
+			)\n\
+		)\n\
+	],\n\
+	\n\
+	lights: [\n\
+		new AreaLight(\n\
+			new Vector3(3.0, 4.0, -3.0),\n\
+			new Vector3(-3.0, -4.0, 3.0),\n\
+			new Vector3(1.0, 0.0, 0.0),\n\
+			1,\n\
+			new Vector3(0.8, 0.8, 0.8),\n\
+			new Vector3(0.8, 0.8, 0.8)\n\
+		),\n\
+		new AreaLight(\n\
+			new Vector3(2.0, 0.0, 3.0),\n\
+			new Vector3(-2.0, 0.0, -3.0),\n\
+			new Vector3(1.0, 0.0, 0.0),\n\
+			1,\n\
+			new Vector3(0.5, 0.5, 0.5),\n\
+			new Vector3(0.5, 0.5, 0.5)\n\
+		),\n\
+		new AmbientLight(\n\
+			new Vector3(0.3, 0.3, 0.3)\n\
+		)\n\
+	]\n\
+}";
+
+(function() {
+	
+	var perlinGen = noise.getPerlinGen(6);
+		
+	return function(surface, pos) {
+		var x = pos.s0;
+		var y = pos.s1;
+		var z = pos.s2;
+		var n = perlinGen(x, y, z);
+		var c = (Math.abs(Math.sin((xi + n * 100) / 7)) * 1.2 + 1.5) * 0.5;
+		return new Vector3(c * 0.8, c * 0.6, c * 0.4);
+	};
+})();
+
 var demos = {
 	
 	none: {
@@ -380,5 +498,22 @@ var demos = {
 			"A sphere lit by 2 area lights and mirrored. To gain \
 			better quality, you may want to increase area light sampling \
 			- e.g. to 4 - which would take a LONG time to render!"
-	}
+	},
+	
+	perlinWood: {
+		
+		format: "js",
+		vw: 320,
+		vh: 240,
+		nsubs: 1,
+		nlsubs: 2,
+		nrefl: 2,
+		nrefr: 0,
+		src: demoPerlinWood,
+		desc:
+			"This scene contains a woodlike sphere with texture generated \
+			with Perlin noise and a highly reflective sphere juxtaposed for\
+			contrast. Set area light sampling higher for better image quality!"
+	},
+
 };

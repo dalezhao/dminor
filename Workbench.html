@@ -5,6 +5,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,700' rel='stylesheet' type='text/css'>
 		<link href="styles/workbench.css" rel="stylesheet" type="text/css">
 		<title>Dminor Workbench</title>
+		<!-- JavaScript files for TextureLab. -->
+		<script src="scripts/texturelab/perlin.js"></script>
 		<!-- JavaScript files for Dminor raytracer. -->
 		<script src="scripts/core/Vector3.js"></script>
 		<script src="scripts/core/Matrix3x3.js"></script>
@@ -57,9 +59,10 @@
 								<option value="none">None</option>
 								<option value="spheres">Simple spheres</option>
 								<option value="triangles">Triangles</option>
-								<option value="reflection" selected="selected">Basic reflections</option>
+								<option value="reflection">Basic reflections</option>
 								<option value="refraction">Basic refractions</option>
 								<option value="sshadow">Soft shadows</option>
+								<option value="perlinWood" selected="selected">Perlin noise textures (wood)</option>
 							</select>
 						</span>
 						<span id="spDemoDesc" class="OptItem"></span>

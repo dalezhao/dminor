@@ -19,9 +19,10 @@ AreaLight.prototype.getShade = function(inters, surfaces, nlsubs) {
 
 	var normal = inters.normal();
 	var posi = inters.pos();
-	var diffuse = inters.surface.material.diffuse;
-	var specular = inters.surface.material.specular;
-	var coSpec = inters.surface.material.coSpec;
+	var surface = inters.surface;
+	var diffuse = inters.surface.material.getDiffuse(surface, posi);
+	var specular = inters.surface.material.getSpecular(surface, posi);
+	var coSpec = inters.surface.material.getCoSpec(surface, posi);
 
 	var shade = new Vector3();
 

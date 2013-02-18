@@ -120,8 +120,8 @@ Ray.prototype.getShade = function(scene, mnrefl, mnrefr, nlsubs) {
 
 	if(inters.valid()) {
 
-		var refr = inters.surface.material.refract;
-		var refl = inters.surface.material.reflect;
+		var refr = inters.surface.material.getRefract();
+		var refl = inters.surface.material.getReflect();
 
 		// Get the diffuse and specular parts of the shade.
 		for(var i = 0; i < lights.length; ++i) {

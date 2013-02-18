@@ -13,11 +13,14 @@ PointLight.eps = 0.0001;
 
 PointLight.prototype.getShade = function(inters, surfaces) {
 
+	var surface = inters.surface;
+	var pos = inters.pos();
+
 	var normal = inters.normal();
 	var pos = inters.pos();
-	var diffuse = inters.surface.material.diffuse;
-	var specular = inters.surface.material.specular;
-	var coSpec = inters.surface.material.coSpec;
+	var diffuse = inters.surface.material.getDiffuse(surface, pos);
+	var specular = inters.surface.material.getSpecular(surface, pos);
+	var coSpec = inters.surface.material.getCoSpec(surface, pos);
 
 	// Check if there are surfaces between this point light and the intersection point.
 	var rayi = new Ray(this.pos, pos.sub(this.pos));

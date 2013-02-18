@@ -34,3 +34,59 @@ function Material(
 	this.idxRefr = idxRefr || 1.0;
 	this.refract = refract || new Vector3();
 }
+
+Material.prototype.getAmbient = function(surface, pos) {
+	
+	if(this.ambient instanceof Function)
+		return this.ambient(surface, pos);
+	else
+		return this.ambient;
+};
+
+Material.prototype.getDiffuse = function(surface, pos) {
+	
+	if(this.diffuse instanceof Function)
+		return this.diffuse(surface, pos);
+	else
+		return this.diffuse;
+};
+
+Material.prototype.getSpecular = function(surface, pos) {
+	
+	if(this.specular instanceof Function)
+		return this.specular(surface, pos);
+	else
+		return this.specular;
+};
+
+Material.prototype.getCoSpec = function(surface, pos) {
+	
+	if(this.coSpec instanceof Function)
+		return this.coSpec(surface, pos);
+	else
+		return this.coSpec;
+};
+
+Material.prototype.getReflect = function(surface, pos) {
+	
+	if(this.reflect instanceof Function)
+		return this.reflect(surface, pos);
+	else
+		return this.reflect;
+};
+
+Material.prototype.getIdxRefr = function(surface, pos) {
+	
+	if(this.idxRefr instanceof Function)
+		return this.idxRefr(surface, pos);
+	else
+		return this.idxRefr;
+};
+
+Material.prototype.getRefract = function(surface, pos) {
+	
+	if(this.refract instanceof Function)
+		return this.refract(surface, pos);
+	else
+		return this.refract;
+};

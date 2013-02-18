@@ -34,6 +34,9 @@ AmbientLight.prototype.constructor = AmbientLight;
  * 
  */
 AmbientLight.prototype.getShade = function(inters, surfaces) {
-
-	return this.intensity.comp(inters.surface.material.ambient);
+	
+	var surface = inters.surface;
+	var pos = inters.pos();
+	
+	return this.intensity.comp(inters.surface.material.getAmbient(surface, pos));
 };
